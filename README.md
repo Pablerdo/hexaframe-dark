@@ -1,3 +1,6 @@
+
+# Hexaframe
+
 Hexaframe is a tool that implements [`Go-with-the-Flow`](https://eyeline-research.github.io/Go-with-the-Flow/) with the help of object segmentation from [SAMv2](https://github.com/facebookresearch/sam2), in order to generate videos from video, coordinate path, and text prompts. It is built with Next.js, Shadcn, and Tailwind, with a simple UI and is hosted on Vercel. 
 
 The project follows the following steps:
