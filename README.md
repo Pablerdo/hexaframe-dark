@@ -19,6 +19,9 @@ The project follows the following steps:
 
 ## Getting Started
 
+# Examples
+
+
 First, run the development server:
 
 ```bash
