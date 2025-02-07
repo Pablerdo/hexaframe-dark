@@ -1,4 +1,18 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Hexaframe is a tool that implements [`Go-with-the-Flow`](https://eyeline-research.github.io/Go-with-the-Flow/) with the help of object segmentation from [SAMv2](https://github.com/facebookresearch/sam2), in order to generate videos from video, coordinate path, and text prompts. It is built with Next.js, Shadcn, and Tailwind, with a simple UI and is hosted on Vercel. 
+
+The project follows the following steps:
+
+1. The user uploads an image.
+
+2. The user clicks on the object they want to move, which sends a request to a ComfyDeploy server that implements SAMv2 on a ComfyUI workflow that segments the image. 
+
+3. The segmented image is shown to the user, which allows him to grab the segmented object and drag it through the desired path. The coordinate path is computed.
+
+4. The user inputs a text prompt.
+
+5. All the inputs are sent to a second ComfyDeploy server that implements Go-with-the-Flow on a ComfyUI workflow that generates the video.
+
+6. The video is shown to the user.
 
 ## Getting Started
 
