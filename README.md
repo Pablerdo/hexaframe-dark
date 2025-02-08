@@ -20,7 +20,7 @@ The project follows the following steps:
 
 ## Examples
 
-### Bear walking through grass
+### Simple bear walking through grass
 
 Input image and object path:
 
@@ -35,6 +35,23 @@ Brown bear walks through tall green grass. He moves its legs with every step, ca
 Generated video:
 
 ![Bear walking through grass](examples/bear-walking/GWF-output-bearwalking.gif)
+
+### Bear starts behind tree
+
+Input image and object path:
+
+![bear behind tree](examples/bear-behind-tree/dragmask.png)
+
+Text prompt:
+
+```txt 
+Brown bear walks through tall grass. He moves its legs with every step, carefully taking a step when its feet touch the ground beneath the grass. If he passes behind a tree, the bear does not suffer any distortion
+```
+
+Generated video:
+
+![bear behind tree video](examples/bear-behind-tree/video.gif)
+
 
 ## Getting Started
 
