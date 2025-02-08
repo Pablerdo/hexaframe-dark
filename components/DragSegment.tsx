@@ -4,12 +4,13 @@ import type React from "react"
 import { useState, useEffect, useRef } from "react"
 
 interface DragSegmentProps {
-  imageUrl: string
+  imageUrl: string 
   maskUrl: string
+  segmentedUrl: string
   width?: number
   height?: number
-  setCoordinatePath: (path: string) => void
-  setCoordinates: (coords: { x: number; y: number }[]) => void
+  setCoordinatePath: any
+  setCoordinates: any
 }
 
 const DragSegment: React.FC<DragSegmentProps> = ({
@@ -21,20 +22,23 @@ const DragSegment: React.FC<DragSegmentProps> = ({
   width = 720,
   height = 480,
 }) => {
-  const [position, setPosition] = useState({ x: 0, y: 0 })
+  const [position, setPosition] = useState<Coords>({ x: 0, y: 0 })
   const [isDragging, setIsDragging] = useState(false)
-  const [dragStart, setDragStart] = useState({ x: 0, y: 0 })
+  const [dragStart, setDragStart] = useState<Coords>({ x: 0, y: 0 })
   const containerRef = useRef<HTMLDivElement>(null)
   const imageRef = useRef<HTMLImageElement>(null)
-  const [centroid, setCentroid] = useState({ x: 0, y: 0 })
-  const [endCoords, setEndCoords] = useState<Coords>({ x: null, y: null })
+  const [centroid, setCentroid] = useState<Coords>({ x: 0, y: 0 })
+  const [endCoords, setEndCoords] = useState<Coords>({ x: 0, y: 0 })
   const [arrowSubmitted, setArrowSubmitted] = useState<boolean>(false)
 
+  type Coords = { x: number, y: number }
+  
   /*
    * Given two coordinates, return an array of 49 equally spaced points
    * along the line from start to end (inclusive).
    */
   const generateLinePoints = (start: Coords, end: Coords, numPoints = 49): Coords[] => {
+    
     const points: Coords[] = []
     const dx = end.x - start.x
     const dy = end.y - start.y
@@ -134,8 +138,12 @@ const DragSegment: React.FC<DragSegmentProps> = ({
     const computeCentroid = async () => {
       try {
         const result = await computeCentroidFromUrl(segmentedUrl)
-        setCentroid(result)
-        console.log("Centroid:", result)
+        if (result) {
+          setCentroid(result)
+          console.log("Centroid:", result)
+        } else {
+          console.error("No white pixels found in the segmented image.")
+        }
       } catch (error) {
         console.error("Error computing centroid:", error)
       }
@@ -156,7 +164,7 @@ const DragSegment: React.FC<DragSegmentProps> = ({
   }
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (isDragging && containerRef.current) {
+    if (isDragging && containerRef.current && dragStart) {
       const containerRect = containerRef.current.getBoundingClientRect()
       const newX = e.clientX - containerRect.left - dragStart.x
       const newY = e.clientY - containerRect.top - dragStart.y
@@ -171,6 +179,8 @@ const DragSegment: React.FC<DragSegmentProps> = ({
   }
 
   const handleMouseUp = (e: React.MouseEvent<HTMLDivElement>) => {
+    console.log("e.clientX ", e.clientX)
+    console.log("e.clientY ", e.clientY)
     setIsDragging(false)
     setEndCoords({ x: centroid.x + position.x, y: centroid.y + position.y })
   }
@@ -191,23 +201,27 @@ const DragSegment: React.FC<DragSegmentProps> = ({
    * Submit arrow coordinates.
    */
   const handleSubmitArrow = () => {
-    if (centroid.x !== null && centroid.y !== null && endCoords.x !== null && endCoords.y !== null) {
-      const points = [centroid, endCoords]
-      setCoordinates(points)
+    const points = [centroid, endCoords]
+    setCoordinates(points)
 
-      // Create a simple path string
-      const path = generateLinePoints(centroid, endCoords, 49)
-      setCoordinatePath(path)
+    // Create a simple path string
+    const path = generateLinePoints(centroid, endCoords, 49)
+    setCoordinatePath(path)
 
-      setArrowSubmitted(true)
-      console.log("Arrow coordinates submitted:", points)
-      console.log("Arrow path submitted:", path)
-    }
+    setArrowSubmitted(true)
+    console.log("Arrow coordinates submitted:", points)
+    console.log("Arrow path submitted:", path)
+    
   }
 
   return (
     <div>
-      <p className="text-sm" style={{margin: "0 10px"}}>Grab your segmented object and drag it</p>
+      <h4 className="text-center">
+        <span className="relative z-10 text-sm">
+          Click on the object you want to move, with a maximum of four points. If the object has different colors or
+          parts, make sure to put a point in each.
+        </span>
+      </h4>
       <div className="flex justify-center w-full">
         <div
           ref={containerRef}
@@ -245,7 +259,7 @@ const DragSegment: React.FC<DragSegmentProps> = ({
         <button
           onClick={handleSubmitArrow}
           disabled={endCoords.x === null || endCoords.y === null}
-          className="flex-1 bg-neutral-900 hover:bg-neutral-900/90 py-3 text-xl rounded-md dark:bg-neutral-50 dark:hover:bg-neutral-50/90"
+          className="flex-1 bg-primary hover:bg-primary/90 py-3 text-xl rounded-md"
         >
           Submit Movement
         </button>

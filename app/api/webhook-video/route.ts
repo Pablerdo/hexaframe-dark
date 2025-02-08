@@ -4,10 +4,10 @@ import { NextResponse } from "next/server"
 const cd = new ComfyDeploy()
 
 // In-memory storage for video URLs (replace with a database in production)
-let videoStore: { [key: string]: string } = {}
+const videoStore: { [key: string]: string } = {}
 
-function findGifUrl(outputs: Output[]): string | undefined {
-  const outputWithGifs = outputs.find(output => 
+function findGifUrl(outputs: any): string | undefined {
+  const outputWithGifs = outputs.find((output: any) => 
     Array.isArray(output.data?.gifs) && output.data.gifs.length > 0
   );
 
@@ -29,7 +29,7 @@ export async function POST(request: Request) {
     if (status === "success") {
       // Get the URL from the first output's url field
       console.log("Video generated:", videoUrl)
-      videoStore[runId] = videoUrl
+      videoStore[runId] = videoUrl || ""
     }
 
     // Return success to ComfyDeploy
@@ -56,5 +56,5 @@ export async function GET(request: Request) {
   }
 }
 
-export { videoStore }
+// export { videoStore }
 

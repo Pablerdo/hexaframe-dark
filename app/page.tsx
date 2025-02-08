@@ -8,7 +8,6 @@ import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 
 export default function Home() {
-  const [image, setImage] = useState<File | null>(null)
   const [imageUrl, setImageUrl] = useState<string | null>(null)
   const [imageResized, setImageResized] = useState<string | null>(null)
   const [imageMask, setImageMask] = useState<string | null>(null)
@@ -20,10 +19,9 @@ export default function Home() {
   const [isGenerating, setIsGenerating] = useState(false)
   const [generationProgress, setGenerationProgress] = useState(0)
 
-  const handleImageSelect = (file: File | null, url: string) => {
-    setImage(file)
-    setImageUrl(url)
-  }
+  // const handleImageSelect = (file: File | null, url: string) => {
+  //   setImageUrl(url)
+  // }
 
   useEffect(() => {
     let intervalId: NodeJS.Timeout
@@ -107,18 +105,29 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen py-12 px-4">
+    <main 
+      className="min-h-screen py-12 px-4"
+      style={{
+        backgroundImage:
+        'url("https://hebbkx1anhila5yf.public.blob.vercel-storage.com/beanstalk-dark-ssEG3OJ9q0kFfRctkDylQqqQjmbwPg.webp")',
+        backgroundColor: "#0a0a0a",
+    }}>
       <div className="max-w-[800px] mx-auto space-y-8">
         <div className="text-center space-y-4">
           <h1 className="text-5xl font-semibold tracking-tight">Hexaframe</h1>
-          <p className="text-neutral-500 dark:text-neutral-400">
-            An implementation of{""}
-            <a href="https://arxiv.org/abs/2501.08331" className="text-neutral-900 hover:underline dark:text-neutral-50">
+          <p className="text-muted-foreground">
+            An implementation of{" "}
+            <a href="https://arxiv.org/abs/2501.08331" className="text-primary hover:underline">
               Go-With-The-Flow
-            </a>{""}
-            with automatic segmentation using{""}
-            <a href="https://arxiv.org/abs/2408.00714" className="text-neutral-900 hover:underline dark:text-neutral-50">
+            </a>{" "}
+            with automatic segmentation using{" "}
+            <a href="https://arxiv.org/abs/2408.00714" className="text-primary hover:underline">
               SAM v2
+            </a>
+          </p>
+          <p className="text-primary hover:underline">
+            <a href="https://github.com/Pablerdo/hexaframe-dark" className="text-primary hover:underline">
+              View on GitHub
             </a>
           </p>
         </div>
@@ -128,7 +137,6 @@ export default function Home() {
             <Label className="text-lg font-semibold mb-4 block">Image Upload & Segmentation</Label>
             <ImageUpload
               onImageSelect={(file, url) => {
-                setImage(file)
                 setImageUrl(url)
               }}
             />

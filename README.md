@@ -17,10 +17,30 @@ The project follows the following steps:
 
 6. The video is shown to the user.
 
+
+## Examples
+
+### Bear walking through grass
+
+Input image and object path:
+
+![Input Image and Object Path](examples/bear-walking/bearwalking-dragmask.png)
+
+Text prompt:
+
+```txt 
+Brown bear walks through tall green grass. He moves its legs with every step, carefully taking a step when its feet touch the ground beneath the grass.
+```
+
+Generated video:
+
+![Bear walking through grass](examples/bear-walking/GWF-output-bearwalking.gif)
+
 ## Getting Started
 
-# Examples
+This is how segmentation should look like:
 
+![Segmentation](examples/segmentation-pics/white-horse-dragged.png)
 
 First, run the development server:
 

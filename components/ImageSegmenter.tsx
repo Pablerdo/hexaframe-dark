@@ -43,7 +43,9 @@ const ImageSegmenter: React.FC<ImageSegmenterProps> = ({
         const data = await response.json()
 
         console.log("Inside segmenter useEffect")
+        console.log("Data:", data)
         console.log("Generated mask:", data.segmentedImageUrl)
+        console.log("Data status:", data.status)
         if (data.status === "success") {
           setSegmentedImageUrl(data.segmentedImageUrl)
           setResizedOriginalUrl(data.resizedOriginalUrl)
@@ -229,7 +231,7 @@ const ImageSegmenter: React.FC<ImageSegmenterProps> = ({
       </div>
       <div className="flex space-x-4">
         <Button
-          className="flex-1 bg-neutral-900 hover:bg-neutral-900/90 py-3 text-xl rounded-md dark:bg-neutral-50 dark:hover:bg-neutral-50/90"
+          className="flex-1 bg-primary hover:bg-primary/90 py-3 text-xl rounded-md"
           onClick={handleSubmitSegmentation}
           disabled={clickedPoints.length === 0 || isSegmenting}
         >
@@ -244,11 +246,11 @@ const ImageSegmenter: React.FC<ImageSegmenterProps> = ({
         </Button>
       </div>
       {isSegmenting && (
-        <div className="text-center p-4 bg-neutral-100 border border-neutral-200 border-neutral-100 rounded-lg dark:bg-neutral-800 dark:border-neutral-800">
-          <p className="text-lg font-semibold text-neutral-950 dark:text-neutral-50">Please wait, segmentation is being calculated...</p>
+        <div className="text-center p-4 bg-neutral-100 border border-neutral-200 border-neutral-100 rounded-lg">
+          <p className="text-lg font-semibold text-white">Please wait, segmentation is being calculated...</p>
         </div>
       )}
-      {segmentedImageUrl && (
+      {segmentedImageUrl && resizedOriginalUrl && cutoutOriginalUrl && (
         <DragSegment
           imageUrl={resizedOriginalUrl}
           maskUrl={cutoutOriginalUrl}

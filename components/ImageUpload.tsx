@@ -1,35 +1,37 @@
 "use client"
 
 import type React from "react"
-import { useState, useCallback } from "react"
-import { useDropzone } from "react-dropzone"
+import { useState } from "react"
+  
+// import { useCallback } from "react"
+// import { useDropzone } from "react-dropzone"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
 interface ImageUploadProps {
-  onImageSelect: (file: File, imageUrl: string) => void
+  onImageSelect: (file: File | null, imageUrl: string) => void
 }
 
 export default function ImageUpload({ onImageSelect }: ImageUploadProps) {
   const [imageUrl, setImageUrl] = useState<string>("")
 
-  const onDrop = useCallback(
-    (acceptedFiles: File[]) => {
-      if (acceptedFiles && acceptedFiles.length > 0) {
-        const file = acceptedFiles[0]
-        const localImageUrl = URL.createObjectURL(file)
-        setImageUrl(localImageUrl)
-        onImageSelect(file, localImageUrl)
-      }
-    },
-    [onImageSelect],
-  )
+  // const onDrop = useCallback(
+  //   (acceptedFiles: File[]) => {
+  //     if (acceptedFiles && acceptedFiles.length > 0) {
+  //       const file = acceptedFiles[0]
+  //       const localImageUrl = URL.createObjectURL(file)
+  //       setImageUrl(localImageUrl)
+  //       onImageSelect(file, localImageUrl)
+  //     }
+  //   },
+  //   [onImageSelect],
+  // )
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop,
-    accept: { "image/*": [] },
-    multiple: false,
-  })
+  // const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  //   onDrop,
+  //   accept: { "image/*": [] },
+  //   multiple: false,
+  // })
 
   const handleUrlSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()

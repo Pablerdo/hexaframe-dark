@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
   try {
     const result = await cd.run.deployment.queue({
       deploymentId: "d4102d2f-1544-4d9c-95db-c50bcd56fee9",
-      webhook: `${req.nextUrl.origin}/api/webhook-segment`,
+      webhook: `https://${process.env.WEBHOOK_URL}/api/webhook-segment`,
       inputs: {
         input_image: imageUrl,
         input_pos_coordinates: JSON.stringify(coordinates),
