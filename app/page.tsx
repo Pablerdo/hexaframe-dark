@@ -127,7 +127,7 @@ export default function Home() {
           </p>
           <p className="text-primary hover:underline">
             <a href="https://github.com/Pablerdo/hexaframe-dark" className="text-primary hover:underline">
-              View on GitHub
+              View examples on GitHub
             </a>
           </p>
         </div>
