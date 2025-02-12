@@ -246,7 +246,7 @@ const ImageSegmenter: React.FC<ImageSegmenterProps> = ({
         </Button>
       </div>
       {isSegmenting && (
-        <div className="text-center p-4 bg-neutral-100 border border-neutral-200 border-neutral-100 rounded-lg">
+        <div className="text-center p-4 border rounded-lg bg-gray-800">
           <p className="text-lg font-semibold text-white">Please wait, segmentation is being calculated...</p>
         </div>
       )}
